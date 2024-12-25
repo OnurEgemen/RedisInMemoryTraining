@@ -29,7 +29,8 @@ namespace InMemoryApp.Web.Controllers
                 
                 
                 MemoryCacheEntryOptions options = new MemoryCacheEntryOptions();
-                options.AbsoluteExpiration = DateTime.Now.AddSeconds(30);
+                options.AbsoluteExpiration = DateTime.Now.AddMinutes(5);
+                options.SlidingExpiration = TimeSpan.FromSeconds(10);
 
 
 
