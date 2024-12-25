@@ -35,7 +35,10 @@ namespace InMemoryApp.Web.Controllers
                 options.SlidingExpiration = TimeSpan.FromSeconds(10);
                 options.Priority = CacheItemPriority.Low;
 
-
+                options.RegisterPostEvictionCallback((key, value, reason, state) =>
+                {
+                    _memoryCache.Set("callback", $"{key}->{value} => sebep:{reason}");
+                });
 
                 _memoryCache.Set<string>("zaman", DateTime.Now.ToString(),options);
             }
@@ -63,7 +66,9 @@ namespace InMemoryApp.Web.Controllers
 
 
             _memoryCache.TryGetValue("zaman", out string zamanCache);
+            _memoryCache.TryGetValue("callback", out string callback);
             ViewBag.zaman = zamanCache;
+            ViewBag.callback = callback;
 
 
             return View();
